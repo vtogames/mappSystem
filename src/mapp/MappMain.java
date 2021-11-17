@@ -21,7 +21,7 @@ public class MappMain {
 
         MappInterpreter.addDefaultCommands();
 
-        MappInterpreter.fromPath("/mapp/test.txt");
+        MappInterpreter.fromPath("/mapp/test.mapp");
 
     }
 

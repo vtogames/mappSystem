@@ -13,7 +13,7 @@ public class MappReader {
     public static String readFile(String filename, String separator) {
 		String line = "";
 
-		String singleLine = "yieldREADER";
+		String singleLine = "mappREADER";
 		InputStream source = MappMain.getMappInterpreter().getClass().getResourceAsStream(filename);
 		InputStream inputStream = new BufferedInputStream(source);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

@@ -1,13 +1,11 @@
 package mapp.interpreter;
 
-import java.util.HashSet;
-
-import mapp.types.MappImage;
+import mapp.exceptions.MappSintaxException;
 
 public abstract class MappCommand {
 
     public abstract String command();
 
-    public abstract void call(MappImage act_image, HashSet<MappImage> imageSet, String suffix);
+    public abstract void call(String suffix) throws MappSintaxException;
     
 }
