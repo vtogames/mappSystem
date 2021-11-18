@@ -11,6 +11,7 @@ public class MappImage {
 
     private BufferedImage image;
     private String name;
+    private int xvalue, yvalue;
 
     
 
@@ -20,6 +21,22 @@ public class MappImage {
     }
 
     public MappImage() {
+    }
+
+    public int getXvalue() {
+        return xvalue;
+    }
+
+    public void setXvalue(int xvalue) {
+        this.xvalue = xvalue;
+    }
+
+    public int getYvalue() {
+        return yvalue;
+    }
+
+    public void setYvalue(int yvalue) {
+        this.yvalue = yvalue;
     }
 
     public BufferedImage getImage() {
@@ -40,7 +57,7 @@ public class MappImage {
 
     @Override
     public String toString() {
-        return "MappImage [name=" + name + "]";
+        return "MappImage [name=" + name + ", width=" + image.getWidth() + ", height=" + image.getHeight() + "]";
     }
 
     public static BufferedImage fromPath(String path) {
