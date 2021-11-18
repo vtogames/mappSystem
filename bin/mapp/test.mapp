@@ -1,7 +1,0 @@
-path=mapp/Yield\sIcon.png
-
-<=icon2 x=10 y=10
-<=test
->
-
-prints=\test\
