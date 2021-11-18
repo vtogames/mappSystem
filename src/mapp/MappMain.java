@@ -5,7 +5,7 @@ import mapp.interpreter.MappInterpreter;
 
 public class MappMain {
 
-    private static MappInterpreter mappInterpreter;
+    private static MappMain main = new MappMain();
     public static String path;
 
     public static void main(String[] args) {
@@ -17,20 +17,27 @@ public class MappMain {
         path = new File(".").getAbsolutePath();
         path = path.substring(0, path.length() - 2);
 
-        mappInterpreter = new MappInterpreter();
-
         MappInterpreter.addDefaultCommands();
 
         MappInterpreter.fromPath("/mapp/test.mapp");
 
     }
 
-    public static MappInterpreter getMappInterpreter() {
-        return mappInterpreter;
+    public static MappMain getMain() {
+        return main;
     }
 
-    public static void setMappInterpreter(MappInterpreter mappInterpreter) {
-        MappMain.mappInterpreter = mappInterpreter;
+    public static void setMain(MappMain main) {
+        MappMain.main = main;
     }
 
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        MappMain.path = path;
+    }
+
+    
 }

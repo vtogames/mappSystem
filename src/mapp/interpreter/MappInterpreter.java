@@ -92,11 +92,60 @@ public class MappInterpreter {
             }
         });
 
+        commands.add(new MappCommand() {
+            @Override
+            public String command() {
+                return ".mappinterpreterf";
+            }
+
+            @Override
+            public void call(String suffix) throws MappSintaxException {
+                if (suffix == null) {
+                    throw new MappSintaxException(command() + " suffix can't be null!");
+                }
+                MappFileAct.act_interpreter_version = Double.parseDouble(suffix);
+                if(MappFileAct.act_interpreter_version != INTERPRETOR_VERSION) {
+                    try {
+                        MappFileAct.act_stop = true;
+                        throw new MappInterpreterException("this mapp file requires the version " + MappFileAct.act_interpreter_version + " of the mapp interpreter.");
+                    } catch (MappInterpreterException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     
         commands.add(new MappCommand() {
             @Override
             public String command() {
                 return "path";
+            }
+
+            @Override
+            public void call(String suffix) throws MappSintaxException {
+                if (suffix == null) {
+                    throw new MappSintaxException(command() + " suffix can't be null!");
+                }
+                if (suffix.charAt(0) != '/') {
+                    suffix = "/" + suffix;
+                }
+                if(MappFileAct.act_imageSet == null)
+                MappFileAct.act_imageSet = new HashSet<>();
+                MappFileAct.act_main_image = new MappImage();
+                try {
+                    MappFileAct.act_main_image.setImage(MappImage.fromPath(suffix));
+                } catch (Exception e) {
+                    System.out.println(suffix);
+                    throw new MappSintaxException(e.getMessage());
+                }
+            }
+        });
+
+        commands.add(new MappCommand() {
+            @Override
+            public String command() {
+                return "pathf";
             }
 
             @Override
@@ -121,11 +170,64 @@ public class MappInterpreter {
         commands.add(new MappCommand() {
             @Override
             public String command() {
+                return "pathsame";
+            }
+
+            @Override
+            public void call(String suffix) throws MappSintaxException {
+                if (suffix == null) {
+                    throw new MappSintaxException(command() + " suffix can't be null!");
+                }
+                if (suffix.charAt(0) != '/') {
+                    suffix = "/" + suffix;
+                }
+                try {
+                    MappFileAct.act_main_image.setImage(MappImage.fromPath(suffix));
+                } catch (Exception e) {
+                    throw new MappSintaxException(e.getMessage());
+                }
+            }
+        });
+
+        commands.add(new MappCommand() {
+            @Override
+            public String command() {
+                return "newl";
+            }
+
+            @Override
+            public void call(String suffix) throws MappSintaxException {
+                MappFileAct.act_imageSet = new HashSet<>();
+            }
+        });
+
+        commands.add(new MappCommand() {
+            @Override
+            public String command() {
+                return "end";
+            }
+
+            @Override
+            public void call(String suffix) throws MappSintaxException {
+                MappFileAct.act_stop = true;
+            }
+        });
+
+        commands.add(new MappCommand() {
+            @Override
+            public String command() {
                 return ">";
             }
 
             @Override
             public void call(String suffix) {
+                if(MappFileAct.act_main_image.getImage() == null) {
+                    try {
+                        throw new MappSintaxException("Cannot find " + MappFileAct.act_main_image.getName() + " MappImage!");
+                    } catch (MappSintaxException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (MappFileAct.act_width == 0) {
                     MappFileAct.act_width = MappFileAct.act_main_image.getImage().getWidth() - MappFileAct.act_x;
                 }
@@ -244,55 +346,21 @@ public class MappInterpreter {
         commands.add(new MappCommand() {
             @Override
             public String command() {
-                return "pathsame";
-            }
-
-            @Override
-            public void call(String suffix) throws MappSintaxException {
-                if (suffix == null) {
-                    throw new MappSintaxException(command() + " suffix can't be null!");
-                }
-                if (suffix.charAt(0) != '/') {
-                    suffix = "/" + suffix;
-                }
-                try {
-                    MappFileAct.act_main_image.setImage(MappImage.fromPath(suffix));
-                } catch (Exception e) {
-                    throw new MappSintaxException(e.getMessage());
-                }
-            }
-        });
-
-        commands.add(new MappCommand() {
-            @Override
-            public String command() {
-                return "newl";
-            }
-
-            @Override
-            public void call(String suffix) throws MappSintaxException {
-                if (suffix == null) {
-                    throw new MappSintaxException(command() + " suffix can't be null!");
-                }
-                MappFileAct.act_imageSet = new HashSet<>();
-            }
-        });
-
-        commands.add(new MappCommand() {
-            @Override
-            public String command() {
                 return "prints";
             }
 
             @Override
             public void call(String suffix) {
-                suffix = suffix.replace("\\imageList\\", MappFileAct.act_imageSet.toString());
-                suffix = suffix.replace("\\x\\", String.valueOf(MappFileAct.act_x));
-                suffix = suffix.replace("\\y\\", String.valueOf(MappFileAct.act_y));
-                suffix = suffix.replace("\\w\\", String.valueOf(MappFileAct.act_width));
-                suffix = suffix.replace("\\h\\", String.valueOf(MappFileAct.act_height));
-                for(MappImage image : MappFileAct.act_imageSet) {
-                    suffix = suffix.replace("\\" + image.getName() + "\\", image.toString());
+                try {
+                    suffix = suffix.replace("\\imageList\\", MappFileAct.act_imageSet.toString());
+                    suffix = suffix.replace("\\x\\", String.valueOf(MappFileAct.act_x));
+                    suffix = suffix.replace("\\y\\", String.valueOf(MappFileAct.act_y));
+                    suffix = suffix.replace("\\w\\", String.valueOf(MappFileAct.act_width));
+                    suffix = suffix.replace("\\h\\", String.valueOf(MappFileAct.act_height));
+                    for(MappImage image : MappFileAct.act_imageSet) {
+                        suffix = suffix.replace("\\" + image.getName() + "\\", image.toString());
+                    }    
+                } catch (Exception ignore) {
                 }
                 System.out.println(suffix);
             }

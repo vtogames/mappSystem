@@ -62,7 +62,7 @@ public class MappImage {
 
     public static BufferedImage fromPath(String path) {
         try {
-            return ImageIO.read(MappMain.getMappInterpreter().getClass().getResource(path));
+            return ImageIO.read(MappMain.getMain().getClass().getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -14,7 +14,7 @@ public class MappReader {
 		String line = "";
 
 		String singleLine = "mappREADER";
-		InputStream source = MappMain.getMappInterpreter().getClass().getResourceAsStream(filename);
+		InputStream source = MappMain.getMain().getClass().getResourceAsStream(filename);
 		InputStream inputStream = new BufferedInputStream(source);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		try {
