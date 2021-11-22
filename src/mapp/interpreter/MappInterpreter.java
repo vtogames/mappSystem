@@ -221,6 +221,9 @@ public class MappInterpreter {
 
             @Override
             public void call(String suffix) {
+                if(MappFileAct.act_image == null) {
+                    MappFileAct.act_image = new MappImage();
+                }
                 if(MappFileAct.act_main_image.getImage() == null) {
                     try {
                         throw new MappSintaxException("Cannot find " + MappFileAct.act_main_image.getName() + " MappImage!");
@@ -234,10 +237,12 @@ public class MappInterpreter {
                 if (MappFileAct.act_height == 0) {
                     MappFileAct.act_height = MappFileAct.act_main_image.getImage().getHeight() - MappFileAct.act_y;
                 }
+                MappFileAct.act_image.setName(MappFileAct.act_image_name);
                 MappFileAct.act_image.setImage(MappFileAct.act_main_image.getImage().getSubimage(MappFileAct.act_x,
                         MappFileAct.act_y, MappFileAct.act_width, MappFileAct.act_height));
                 MappFileAct.act_imageSet.add(MappFileAct.act_image);
                 MappFileAct.act_image = null; 
+                MappFileAct.act_image_name = null;
                 MappFileAct.act_x = 0;
                 MappFileAct.act_y = 0;
                 MappFileAct.act_width = 0;
