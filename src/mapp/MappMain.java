@@ -19,8 +19,6 @@ public class MappMain {
 
         MappInterpreter.addDefaultCommands();
 
-        MappInterpreter.fromPath("/mapp/test.mapp");
-
     }
 
     public static MappMain getMain() {
