@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mappSystem:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mappSystem_jar</output-path>
+    <root id="archive" name="mappSystem.jar">
+      <element id="module-output" name="mappSystem" />
+    </root>
+  </artifact>
+</component>
